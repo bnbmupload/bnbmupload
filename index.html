@@ -1,0 +1,117 @@
+<html>
+<head></head>
+<body>
+<input type="radio" name="rank" id="sally" checked>샐리<br>
+<input type="radio" name="rank" id="toto">토토/란<br>
+현재 레벨 <input type="number" id="currentlevel" min="0" max="10" value="0"><br>
+현재 보유량 <input type="number" id="currentcount" value="0"><br>
+현재 펫가루 <input type="number" id="currenting" value="0"><br>
+<input type="button" value="계산하기" onclick="calc()"><br><br>
+<div id ="result" />
+</body>
+<script>
+function calc()
+{
+	var text = "";
+	/*
+		샐리 업글비 필요조각개수 * 1000
+		토토 업글비 필요조각개수 * 500
+		조각개수
+		5, 10, 15, 20, 25, 35, 45, 55, 70, 90
+	*/
+	/*
+		토토의 경우
+		1% 확률로 70가루와 -700루찌
+		2.5% 확률로 100가루와 0루찌
+		7.5% 확률로 40가루와 -400루찌
+		89% 확률로 20가루와 -200루찌		
+		1뽑기 기대 = 24가루와 -215루찌
+		
+		샐리의 경우
+		1% 확률로 200가루와 0루찌
+		10% 확률로 40가루와 -400루찌
+		89% 확률로 20가루와 -200루찌		
+		1뽑기 기대 = 23.8가루와 -218루찌
+	*/
+	
+	/*
+		필요 가루 개수를 뽑기
+	*/
+	var level = document.getElementById("currentlevel").value;
+	var table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
+	if(document.getElementById("toto").checked)
+	{
+		var table2 = [100, 24, 215, 500];
+	}
+	else
+	{
+		var table2 = [200, 23.8, 218, 1000];
+	}
+	if (level < 5)
+	{
+		var req = 0;
+		for (var i = level; i < 5; i++)
+		{
+			req += table1[i]
+		}		
+		var reqA = req - document.getElementById("currentcount").value;
+		text += "5성까지 추가로 필요한 펫 조각은 ";
+		text += nwc(reqA);
+		var reqB = reqA * table2[0] - document.getElementById("currenting").value;
+		text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
+		var purple = Math.ceil(reqB * 250 / table2[1]);
+		if (purple < 0)
+			purple = 0;
+		text += nwc(purple);
+		text += "개,<br>노란루찌는 "
+		var yellow = Math.ceil(reqB * table2[2] / table2[1]);
+		if (yellow < 0)
+			yellow = 0;
+		yellow = yellow + req * table2[3];
+		text += nwc(yellow);
+		text += "개 입니다<br>";
+		var dia = Math.ceil(purple/10 + yellow/100);
+		text += "보라/일반 루찌를 다이아로 구입할 경우 필요 다이아는 ";
+		text += nwc(dia);
+		text += "개이며<br>이를 특별한 할인 없이 현금으로 구입할 경우 ";
+		var cash = Math.ceil(dia * 24.75);
+		text += nwc(cash);
+		text += "원 입니다<br><br>";
+	}
+	var req = 0;
+	for (var i = level; i < 10; i++)
+	{
+		req += table1[i]
+	}		
+	var reqA = req - document.getElementById("currentcount").value;
+	text += "또한 10성까지 추가로 필요한 펫 조각은 ";
+	text += nwc(reqA);
+	var reqB = reqA * table2[0] - document.getElementById("currenting").value;
+	text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
+	var purple = Math.ceil(reqB * 250 / table2[1]);
+	if (purple < 0)
+		purple = 0;
+	text += nwc(purple);
+	text += "개,<br>노란루찌는 "
+	var yellow = Math.ceil(reqB * table2[2] / table2[1]);
+	if (yellow < 0)
+		yellow = 0;
+	yellow = yellow + req * table2[3];
+	text += nwc(yellow);
+	text += "개 입니다<br>";
+	var dia = Math.ceil(purple/10 + yellow/100);
+	text += "보라/일반 루찌를 다이아로 구입할 경우 필요 다이아는 ";
+	text += nwc(dia);
+	text += "개이며<br>이를 특별한 할인 없이 현금으로 구입할 경우 ";
+	var cash = Math.ceil(dia * 24.75);
+	text += nwc(cash);
+	text += "원 입니다<br><br>";
+	
+	
+	document.getElementById("result").innerHTML = text;
+}
+function nwc(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
+</html>
