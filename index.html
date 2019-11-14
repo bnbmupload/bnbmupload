@@ -56,6 +56,8 @@ function calc()
 		}		
 		var reqA = req - document.getElementById("currentcount").value;
 		text += "5성까지 추가로 필요한 펫 조각은 ";
+		if (reqA < 0)
+			reqA = 0;
 		text += nwc(reqA);
 		var reqB = reqA * table2[0] - document.getElementById("currenting").value;
 		text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
@@ -85,6 +87,8 @@ function calc()
 	}		
 	var reqA = req - document.getElementById("currentcount").value;
 	text += "또한 10성까지 추가로 필요한 펫 조각은 ";
+	if (reqA < 0)
+		reqA = 0;
 	text += nwc(reqA);
 	var reqB = reqA * table2[0] - document.getElementById("currenting").value;
 	text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
