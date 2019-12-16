@@ -1,121 +1,348 @@
 ﻿<html>
-<head></head>
+<head>
+<link rel="stylesheet" type="text/css" href="pet.css" />
+</head>
 <body>
-<input type="radio" name="rank" id="sally" checked>샐리<br>
-<input type="radio" name="rank" id="toto">토토/란<br>
-펫 레벨<input type="number" id="currentlevel" min="0" max="10" value="0"><br>
-펫 조각<input type="number" id="currentcount" value="0"><br>
-펫 가루<input type="number" id="currenting" value="0"><br>
-<input type="button" value="계산하기" onclick="calc()"><br><br>
-<div id ="result" />
+<div id = "area1">
+<!-- 이 영역은 펫/정수/스킬 중 1개를 선택합니다. -->
+<input type="radio" name="radio1" id="radio1_pet" checked onclick="pet_on()">펫
+<input type="radio" name="radio1" id="radio1_character" onclick="character_on()">캐릭터
+<input type="radio" name="radio1" id="radio1_skill" onclick="skill_on()">스킬
+<input type="radio" name="radio1" id="radio1_enchant" onclick="enchant_on()">정수
+</div>
+<div id = "large1">
+<div id = "area2">
+<!-- 이 영역은 펫/정수/스킬 의 세부 종류를 선택합니다. -->
+<div id="area2_pet">
+	<input type="radio" name="rank" id="pet_1" checked>샐리
+	<input type="radio" name="rank" id="pet_2">토토/란/레너드/에드워드
+	<input type="radio" name="rank" id="pet_3">기타 펫
+</div>
+<div id="area2_character" style="display:none">
+	<input type="radio" name="rank" id="character_1">라인프렌즈 캐릭터
+	<input type="radio" name="rank" id="character_2">기본 캐릭터
+</div>
+<div id="area2_skill" style="display:none">
+	<input type="radio" name="rank" id="skill_1">스킬
+</div>
+<div id="area2_enchant" style="display:none">
+	<input type="radio" name="rank" id="enchant_1">3성 정수
+	<input type="radio" name="rank" id="enchant_2">2성 정수
+	<input type="radio" name="rank" id="enchant_3">1성 정수
+</div>
+</div>
+<div id = "area3">
+<!-- 이 영역은 현재 보유 재고량을 입력합니다. -->
+<div id="area3_pet">
+<div class="inputtext"><label>레벨</label><input type="number" id="petlevel" min="0" max="10" value="0"></div>
+<div class="inputtext"><label>조각</label><input type="number" id="petpart" value="0"></div>
+<div class="inputtext"><label>가루</label><input type="number" id="petfrag" value="0"></div>
+</div>
+<div id="area3_petticket">
+<div class="inputtext"><label>티켓</label><input type="number" id="petticket" value="0"></div>
+<div class="inputtext"><label>티켓 5+1</label><input type="number" id="petticket6" value="0"></div>
+</div>
+<div class="inputtext"><label>보라루찌</label><input type="number" id="plucci" value="0"></div>
+<div class="inputtext"><label>노란루찌</label><input type="number" id="lucci" value="0"></div>
+<div class="inputtext"><label>다이아</label><input type="number" id="dia" value="0"></div>
+<div class="inputtext"><label>목표레벨</label><input type="number" id="finallevel" min="0" max="10" value="10"></div>
+</div>
+<input type="button" value="계산하기" onclick="calc()">
+</div>
+<div id="large2">
+<!-- 이 영역은 결과를 표시합니다. -->
+<div id ="result">계산 대기중...</div>
+</div>
+
+
+
 </body>
 <script>
+function pet_on()
+{
+
+	document.getElementById("area2_pet").style.display = "block";
+	document.getElementById("area2_character").style.display = "none";
+	document.getElementById("area2_skill").style.display = "none";
+	document.getElementById("area2_enchant").style.display = "none";
+	document.getElementById("pet_1").checked = true;
+	
+}
+function character_on()
+{
+
+	document.getElementById("area2_pet").style.display = "none";
+	document.getElementById("area2_character").style.display = "block";
+	document.getElementById("area2_skill").style.display = "none";
+	document.getElementById("area2_enchant").style.display = "none";
+	document.getElementById("character_2").checked = true;
+	
+}
+function skill_on()
+{
+
+	document.getElementById("area2_pet").style.display = "none";
+	document.getElementById("area2_character").style.display = "none";
+	document.getElementById("area2_skill").style.display = "block";
+	document.getElementById("area2_enchant").style.display = "none";
+	document.getElementById("skill_1").checked = true;
+	
+}
+function enchant_on()
+{
+
+	document.getElementById("area2_pet").style.display = "none";
+	document.getElementById("area2_character").style.display = "none";
+	document.getElementById("area2_skill").style.display = "none";
+	document.getElementById("area2_enchant").style.display = "block";
+	document.getElementById("enchant_1").checked = true;
+	
+}
+
 function calc()
 {
 	var text = "";
 	/*
-		샐리 업글비 필요조각개수 * 1000
-		토토 업글비 필요조각개수 * 500
-		조각개수
+	
+		1등급 펫 업글비 필요조각개수 * 1000
+		2~3등급 펫 업글비 필요조각개수 * 500
+		
+		1~2등급 펫 조각개수
 		5, 10, 15, 20, 25, 35, 45, 55, 70, 90
-	*/
-	/*
-		토토의 경우
+		3등급 펫 조각 개수
+		3, 6, 10, 15, 20, 25, 30, 40, 50, 70
+		
+		1등급 펫의 경우
+		1% 확률로 200가루와 0루찌
+		10% 확률로 40가루와 -400루찌
+		89% 확률로 20가루와 -200루찌		
+		1뽑기 기대 = 23.8가루와 -218루찌
+		
+		2등급 펫의 경우
 		1% 확률로 70가루와 -700루찌
 		2.5% 확률로 100가루와 0루찌
 		7.5% 확률로 40가루와 -400루찌
 		89% 확률로 20가루와 -200루찌		
 		1뽑기 기대 = 24가루와 -215루찌
 		
-		샐리의 경우
-		1% 확률로 200가루와 0루찌
+		3등급 펫의 경우
+		1% 확률로 70가루와 -700루찌
 		10% 확률로 40가루와 -400루찌
-		89% 확률로 20가루와 -200루찌		
-		1뽑기 기대 = 23.8가루와 -218루찌
+		11.125% 확률로 50가루와 0루찌
+		77.875% 확률로 20가루와 -200루찌
+		1뽑기 기대 = 25.8375가루와 -202.75루찌
 	*/
 	
 	/*
+		캐릭터 업글 조각개수
+		[3,5,10,15,25]
+		업글비용
+		[1500,2500,5000,10000,20000]
+		
+		1등급 캐릭터
+		1뽑기 기대 = 0.875/6 
+		
+		2등급 캐릭터 (8종)
+		12.5% 확률로 80가루 0루찌
+		87.5% 확률로 30가루 -300루찌
+		1뽑기 기대 = 36.25가루 -262.5루찌
+	*/
+	/*
+		스킬 업글 조각 개수
+		[1,2,4,8,10,12,16,20,25,30]
+		업글비용
+		[1500,500,1000,2000,2500,3000,4000,5000,7500,10000]
+		
+		스킬 총 25가지
+		1/25 : 가루 40 루찌 0
+		24/25 : 가루 15 루찌 150
+		평균 : 가루 16 루찌 144
+	*/
+	
+	/*
+		정수 업글 조각 개수
+		3성 [1,2,4,8,10,12,16,20,25,30]
+		2성 [1,3,6,9,12,15,20,25,30,40]
+		1성 [1,5,10,15,20,25,30,35,40,50]
+		
+		정수 업글 비용
+		3성 [450,900,1800,3600,4500,5400,7200,9000,15000,20000]
+		2성 [150,450,900,1350,1800,2250,3000,3750,6000,10000]
+		1성 [50,250,500,750,1000,1250,1750,2250,3000,5000]
+		
+		정수 뽑기 확률
+		3성 
+		5% 70가루 0루찌
+		25% 27가루 -270루찌
+		60% 9가루 -90루찌
+		1% 15가루 -150루찌
+		2% 12가루 -120루찌
+		7% 9가루 -90루찌
+		평균 16.67가루 -131.7루찌
+		2성
+		30% 27가루 -270루찌
+		10% 27가루 0루찌
+		50% 9가루 -90루찌
+		1% 15가루 -150루찌
+		2% 12가루 -120루찌
+		7% 9가루 -90루찌
+		평균 16.32가루 -136.2루찌
+		1성 평균 15가루 143.16루찌
+		
+	*/
+	/*
 		필요 가루 개수를 뽑기
 	*/
-	var level = document.getElementById("currentlevel").value;
-	var table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
-	if(document.getElementById("toto").checked)
+	var table1, table2, table3;
+	var yellow=0;
+	var purple=0;
+	var petlevel = parseIntS(document.getElementById("petlevel").value);
+	var finallevel = parseIntS(document.getElementById("finallevel").value);
+	var petpart = parseIntS(document.getElementById("petpart").value);
+	var petfrag = parseIntS(document.getElementById("petfrag").value);
+	var lucci = parseIntS(document.getElementById("lucci").value);
+	var plucci = parseIntS(document.getElementById("plucci").value);
+	var petticket = parseIntS(document.getElementById("petticket").value);
+	var petticket6 = parseIntS(document.getElementById("petticket6").value);
+	var dia = parseIntS(document.getElementById("dia").value);
+	
+	if(document.getElementById("pet_1").checked)
 	{
-		var table2 = [100, 24, 215, 500];
+		table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
+		table2 = [200, 23.8, 218,1500];
+		table3 = [5000,10000,15000,20000,25000,35000,45000,55000,70000,90000];
 	}
+	else if(document.getElementById("pet_2").checked)
+	{
+		table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
+		table2 = [100, 24, 215,1500];
+		table3 = [2500,5000,7500,10000,12500,17500,22500,27500,35000,45000];
+	}
+	else if (document.getElementById("pet_3").checked)
+	{
+		table1 = [3, 6, 10, 15, 20, 25, 30, 40, 50, 70];
+		table2 = [50, 25.8375, 202.75,1500];
+		table3 = [1500,3000,5000,7500,10000,12500,15000,20000,25000,35000];
+	}
+	else if (document.getElementById("character_1").checked)
+	{
+		table1 = [3,5,10,15,25];
+		table2 = [80, 36.25, 262.5,1500];
+		table3 = [1500,2500,5000,10000,20000];
+	}
+	else if (document.getElementById("character_2").checked)
+	{
+		table1 = [3,5,10,15,25];
+		table2 = [80, 36.25, 262.5,1500];
+		table3 = [1500,2500,5000,10000,20000];
+	}
+	else if (document.getElementById("skill_1").checked)
+	{
+		table1 = [1,2,4,8,10,12,16,20,25,30];
+		table2 = [40, 16,144,1000];
+		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
+	}
+	else if (document.getElementById("enchant_1").checked)
+	{
+		table1 = [1,2,4,8,10,12,16,20,25,30];
+		table2 = [70, 16.67,131.7,500];
+		table3 = [450,900,1800,3600,4500,5400,7200,9000,15000,20000];
+	}
+	else if (document.getElementById("enchant_2").checked)
+	{
+		table1 = [1,3,6,9,12,15,20,25,30,40];
+		table2 = [27, 16.32,136.2,500];
+		table3 = [150,450,900,1350,1800,2250,3000,3750,6000,10000];
+	}
+	else if (document.getElementById("enchant_3").checked)
+	{
+		table1 = [1,5,10,15,20,25,30,35,40,50];
+		table2 = [10, 15,143.16,500];
+		table3 = [50,250,500,750,1000,1250,1750,2250,3500,5000];
+	}
+	if (petlevel >= finallevel)
+		text = "이미 목표레벨에 도달했습니다.";
 	else
 	{
-		var table2 = [200, 23.8, 218, 1000];
-	}
-	if (level < 5)
-	{
 		var req = 0;
-		for (var i = level; i < 5; i++)
+		for (var i = petlevel; i < finallevel; i++)
 		{
 			req += table1[i]
+			yellow += table3[i]
+			if (isNaN(table1[i]))
+			{
+				text = "최대 레벨을 초과하여 설정하였습니다.";
+				document.getElementById("result").innerHTML = text;
+				return
+			}
 		}		
-		var reqA = req - document.getElementById("currentcount").value;
-		text += "5성까지 추가로 필요한 펫 조각은 ";
+		var reqA = req - petpart;
+		text += "목표레벨인 ";
+		text += finallevel;
+		text += "레벨까지 추가로 필요한 조각은 ";
 		if (reqA < 0)
 			reqA = 0;
 		text += nwc(reqA);
-		var reqB = reqA * table2[0] - document.getElementById("currenting").value;
-		text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
-		var purple = Math.ceil(reqB * 250 / table2[1]);
-		if (purple < 0)
-			purple = 0;
-		text += nwc(purple);
-		text += "개,<br>노란루찌는 "
-		var yellow = Math.ceil(reqB * table2[2] / table2[1]);
-		if (yellow < 0)
-			yellow = 0;
-		yellow = yellow + req * table2[3];
-		text += nwc(yellow);
-		text += "개 입니다<br>";
-		var dia = Math.ceil(purple/10 + yellow/100);
-		text += "보라/일반 루찌를 다이아로 구입할 경우 필요 다이아는 ";
-		text += nwc(dia);
-		text += "개이며<br>이를 특별한 할인 없이 현금으로 구입할 경우 ";
-		var cash = Math.ceil(dia * 24.75);
+		text += "조각이며,<br>현재  보유한 조각, 가루, 티켓을 고려하여 추가로 필요한 재화는 아래와 같습니다.<br><br>";
+		if (document.getElementById("character_1").checked)
+		{
+			text+="다이아 : ";
+			dia2 = Math.ceil(reqA * 250 / 0.875);
+			text += nwc(dia2);
+			text += "<br>*라인프렌즈 캐릭터는 가끔 열리는 이벤트 상점을 이용하면 싸게 구입할 수 있습니다.<br><br>";
+		}
+		else
+		{		
+			text += "보라루찌 : ";
+			var reqB = reqA * table2[0] - petfrag;
+			purple = opi(Math.ceil(reqB * table2[3]/6 / table2[1]) - (petticket+petticket6*6)*250);
+			text += nwc(purple);
+			text += "<br>루찌 : "
+			yellow += opi(Math.ceil(reqB * table2[2] / table2[1]));
+			text += nwc(yellow);
+			text += "<br><br>현재 보유한 보라루찌와 루찌를 차감한 차액은 아래와 같습니다.<br><br>보라루찌 : ";
+			
+			var purple2 = opi(purple - plucci);
+			var yellow2 = opi(yellow - lucci);
+			
+			text += nwc(purple2);
+			text += "<br>루찌 : "
+			text += nwc(yellow2);
+			text += "<br><br>";
+			dia2 = Math.ceil(purple2/10 + yellow2/100);
+		}
+		
+		
+		
+		
+		text += "부족한 재화를 다이아로 구입할 경우 필요 다이아는 ";
+		text += nwc(dia2);
+		text += "개이며 부족한 다이아는 ";
+		dia2 = opi(dia2-dia);
+		text += nwc(dia2);
+		text += "개입니다.<br>이를 특별한 할인 없이 현금으로 구입할 경우 ";
+		var cash = Math.ceil(dia2 * 24.75);
 		text += nwc(cash);
-		text += "원 입니다<br><br>";
+		text += "원,<br>시즌별 다이아 할인팩으로만 구입할 경우 ";
+		var cash = Math.ceil(dia2 * 14.5);
+		text += nwc(cash);
+		text += "원 입니다.";
 	}
-	var req = 0;
-	for (var i = level; i < 10; i++)
-	{
-		req += table1[i]
-	}		
-	var reqA = req - document.getElementById("currentcount").value;
-	text += "또한 10성까지 추가로 필요한 펫 조각은 ";
-	if (reqA < 0)
-		reqA = 0;
-	text += nwc(reqA);
-	var reqB = reqA * table2[0] - document.getElementById("currenting").value;
-	text += "조각이며,<br>현재 가루를 고려하여 추가로 필요한 보라루찌는 ";
-	var purple = Math.ceil(reqB * 250 / table2[1]);
-	if (purple < 0)
-		purple = 0;
-	text += nwc(purple);
-	text += "개,<br>노란루찌는 "
-	var yellow = Math.ceil(reqB * table2[2] / table2[1]);
-	if (yellow < 0)
-		yellow = 0;
-	yellow = yellow + req * table2[3];
-	text += nwc(yellow);
-	text += "개 입니다<br>";
-	var dia = Math.ceil(purple/10 + yellow/100);
-	text += "보라/일반 루찌를 다이아로 구입할 경우 필요 다이아는 ";
-	text += nwc(dia);
-	text += "개이며<br>이를 특별한 할인 없이 현금으로 구입할 경우 ";
-	var cash = Math.ceil(dia * 24.75);
-	text += nwc(cash);
-	text += "원 입니다<br><br>";
-	
-	
 	document.getElementById("result").innerHTML = text;
 }
 function nwc(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function opi(x) {
+	if (x >= 0)
+		return x
+	return 0
+}
+function parseIntS(x){
+	x = parseInt(x)
+	if (isNaN(x))
+		return 0
+	return x;
 }
 </script>
 </html>

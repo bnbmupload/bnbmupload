@@ -1,0 +1,28 @@
+﻿#area1,
+#large1,
+#large2
+{
+	width:100%;
+	border: 1px solid gray;
+	border-radius: 5px;
+	margin:5 auto;
+	min-height:30px;
+}
+
+
+#area3 input
+{
+	width: auto;
+	margin:5 auto;
+}
+
+input[type=number]
+{
+	min-width: 100px;
+	max-width: 100px;
+}
+
+.inputtext
+{
+	display:inline-block;
+}
