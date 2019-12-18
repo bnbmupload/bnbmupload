@@ -5,53 +5,56 @@
 <body>
 <div id = "area1">
 <!-- 이 영역은 펫/정수/스킬 중 1개를 선택합니다. -->
-<input type="radio" name="radio1" id="radio1_pet" checked onclick="pet_on()">펫
-<input type="radio" name="radio1" id="radio1_character" onclick="character_on()">캐릭터
-<input type="radio" name="radio1" id="radio1_skill" onclick="skill_on()">스킬
-<input type="radio" name="radio1" id="radio1_enchant" onclick="enchant_on()">정수
+	<input type="radio" name="radio1" id="radio1_pet" checked onclick="pet_on()">펫
+	<input type="radio" name="radio1" id="radio1_character" onclick="character_on()">캐릭터
+	<input type="radio" name="radio1" id="radio1_skill" onclick="skill_on()">스킬
+	<input type="radio" name="radio1" id="radio1_enchant" onclick="enchant_on()">정수
 </div>
 <div id = "large1">
-<div id = "area2">
-<!-- 이 영역은 펫/정수/스킬 의 세부 종류를 선택합니다. -->
-<div id="area2_pet">
-	<input type="radio" name="rank" id="pet_1" checked>샐리
-	<input type="radio" name="rank" id="pet_2">토토/란/레너드/에드워드
-	<input type="radio" name="rank" id="pet_3">기타 펫
-</div>
-<div id="area2_character" style="display:none">
-	<input type="radio" name="rank" id="character_1">라인프렌즈 캐릭터
-	<input type="radio" name="rank" id="character_2">기본 캐릭터
-</div>
-<div id="area2_skill" style="display:none">
-	<input type="radio" name="rank" id="skill_1">스킬
-</div>
-<div id="area2_enchant" style="display:none">
-	<input type="radio" name="rank" id="enchant_1">3성 정수
-	<input type="radio" name="rank" id="enchant_2">2성 정수
-	<input type="radio" name="rank" id="enchant_3">1성 정수
-</div>
-</div>
-<div id = "area3">
-<!-- 이 영역은 현재 보유 재고량을 입력합니다. -->
-<div id="area3_pet">
-<div class="inputtext"><label>레벨</label><input type="number" id="petlevel" min="0" max="10" value="0"></div>
-<div class="inputtext"><label>조각</label><input type="number" id="petpart" value="0"></div>
-<div class="inputtext"><label>가루</label><input type="number" id="petfrag" value="0"></div>
-</div>
-<div id="area3_petticket">
-<div class="inputtext"><label>티켓</label><input type="number" id="petticket" value="0"></div>
-<div class="inputtext"><label>티켓 5+1</label><input type="number" id="petticket6" value="0"></div>
-</div>
-<div class="inputtext"><label>보라루찌</label><input type="number" id="plucci" value="0"></div>
-<div class="inputtext"><label>노란루찌</label><input type="number" id="lucci" value="0"></div>
-<div class="inputtext"><label>다이아</label><input type="number" id="dia" value="0"></div>
-<div class="inputtext"><label>목표레벨</label><input type="number" id="finallevel" min="0" max="10" value="10"></div>
-</div>
-<input type="button" value="계산하기" onclick="calc()">
+	<div id = "area2">
+	<!-- 이 영역은 펫/정수/스킬 의 세부 종류를 선택합니다. -->
+		<div id="area2_pet">
+			<input type="radio" name="rank" id="pet_1" checked>샐리
+			<input type="radio" name="rank" id="pet_2">토토/란/레너드/에드워드
+			<input type="radio" name="rank" id="pet_3">기타 펫
+		</div>
+		<div id="area2_character" style="display:none">
+			<input type="radio" name="rank" id="character_1">라인프렌즈 캐릭터
+			<input type="radio" name="rank" id="character_2">기본 캐릭터
+		</div>
+		<div id="area2_skill" style="display:none">
+			<input type="radio" name="rank" id="skill_1">스킬
+			<input type="radio" name="rank" id="skill_2">하마 소환
+		</div>
+		<div id="area2_enchant" style="display:none">
+			<input type="radio" name="rank" id="enchant_1">3성 정수
+			<input type="radio" name="rank" id="enchant_2">2성 정수
+			<input type="radio" name="rank" id="enchant_3">1성 정수
+		</div>
+	</div>
+	<div id = "area3">
+	<!-- 이 영역은 현재 보유 재고량을 입력합니다. -->
+		<div id="area3_pet">
+			<div class="inputtext"><label>레벨</label><input type="number" id="petlevel" min="0" max="10" value="0"></div>
+			<div class="inputtext"><label>조각</label><input type="number" id="petpart" value="0"></div>
+			<div class="inputtext"><label>가루</label><input type="number" id="petfrag" value="0"></div>
+		</div>
+		<div id="area3_petticket">
+			<div class="inputtext"><label>티켓</label><input type="number" id="petticket" value="0"></div>
+			<div class="inputtext"><label>티켓 5+1</label><input type="number" id="petticket6" value="0"></div>
+		</div>
+		<div id="area3_storage">
+			<div class="inputtext"><label>보라루찌</label><input type="number" id="plucci" value="0"></div>
+			<div class="inputtext"><label>노란루찌</label><input type="number" id="lucci" value="0"></div>
+			<div class="inputtext"><label>다이아</label><input type="number" id="dia" value="0"></div>
+			<div class="inputtext"><label>목표레벨</label><input type="number" id="finallevel" min="0" max="10" value="10"></div>
+		</div>
+	</div>
+	<input type="button" value="계산하기" onclick="calc()">
 </div>
 <div id="large2">
 <!-- 이 영역은 결과를 표시합니다. -->
-<div id ="result">계산 대기중...</div>
+	<div id ="result">계산 대기중...</div>
 </div>
 
 
@@ -147,16 +150,15 @@ function calc()
 		87.5% 확률로 30가루 -300루찌
 		1뽑기 기대 = 36.25가루 -262.5루찌
 	*/
+	
 	/*
 		스킬 업글 조각 개수
 		[1,2,4,8,10,12,16,20,25,30]
 		업글비용
 		[1500,500,1000,2000,2500,3000,4000,5000,7500,10000]
 		
-		스킬 총 25가지
-		1/25 : 가루 40 루찌 0
-		24/25 : 가루 15 루찌 150
-		평균 : 가루 16 루찌 144
+		스킬별 뽑기확률의 경우 하단에 후술
+		
 	*/
 	
 	/*
@@ -239,8 +241,33 @@ function calc()
 	else if (document.getElementById("skill_1").checked)
 	{
 		table1 = [1,2,4,8,10,12,16,20,25,30];
-		table2 = [40, 16,144,1000];
+		table2 = [40, 0,0,1000];
 		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
+		
+		/*
+			스킬별 뽑기 확률에 관한 내용
+			
+			스킬 총 25가지
+			최신 스킬의 경우 10%, 나머지 스킬이 1/n
+			스킬 조각의 가격은 40, 분해시 15가루와 -150루찌
+		*/
+		var skillcount = 25;
+		var skillchance = 0.9/(skillcount-1);
+		table2[1] = skillchance * 40 + (1-skillchance) * 15;
+		table2[2] = (1-skillchance) * 150
+	}
+	else if (document.getElementById("skill_2").checked)
+	{
+		table1 = [1,2,4,8,10,12,16,20,25,30];
+		table2 = [40, 0,0,1000];
+		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
+		
+		/*
+			최신 스킬의 경우 뽑기 확률은 10%가 된다
+		*/
+		var skillchance = 0.1;
+		table2[1] = skillchance * 40 + (1-skillchance) * 15;
+		table2[2] = (1-skillchance) * 150		
 	}
 	else if (document.getElementById("enchant_1").checked)
 	{
@@ -271,7 +298,9 @@ function calc()
 			yellow += table3[i]
 			if (isNaN(table1[i]))
 			{
-				text = "최대 레벨을 초과하여 설정하였습니다.";
+				text = "목표레벨이 너무 높습니다.<br>최대 레벨은 ";
+				text += i;
+				text += "입니다.";
 				document.getElementById("result").innerHTML = text;
 				return
 			}
