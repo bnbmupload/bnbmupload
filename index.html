@@ -23,7 +23,7 @@
 			<input type="radio" name="rank" id="character_2">기본 캐릭터
 		</div>
 		<div id="area2_skill" style="display:none">
-			<input type="radio" name="rank" id="skill_1">스킬
+			<input type="radio" name="rank" id="skill_1">하마 제외 스킬
 			<input type="radio" name="rank" id="skill_2">하마 소환
 		</div>
 		<div id="area2_enchant" style="display:none">
@@ -287,6 +287,9 @@ function calc()
 		table2 = [10, 15,143.16,500];
 		table3 = [50,250,500,750,1000,1250,1750,2250,3500,5000];
 	}
+	
+	
+	
 	if (petlevel >= finallevel)
 		text = "이미 목표레벨에 도달했습니다.";
 	else
