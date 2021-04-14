@@ -14,17 +14,17 @@
 	<div id = "area2">
 	<!-- 이 영역은 펫/정수/스킬 의 세부 종류를 선택합니다. -->
 		<div id="area2_pet">
-			<input type="radio" name="rank" id="pet_1" checked>샐리
-			<input type="radio" name="rank" id="pet_2">토토/란/레너드/에드워드
+			<!-- <input type="radio" name="rank" id="pet_1">샐리 -->
+			<input type="radio" name="rank" id="pet_2" checked>토토/란/레너드/에드워드
 			<input type="radio" name="rank" id="pet_3">기타 펫
 		</div>
 		<div id="area2_character" style="display:none">
-			<input type="radio" name="rank" id="character_1">라인프렌즈 캐릭터
+			<!-- <input type="radio" name="rank" id="character_1">라인프렌즈 캐릭터 -->
 			<input type="radio" name="rank" id="character_2">기본 캐릭터
 		</div>
 		<div id="area2_skill" style="display:none">
-			<input type="radio" name="rank" id="skill_1">하마 제외 스킬
-			<input type="radio" name="rank" id="skill_2">하마 소환
+			<input type="radio" name="rank" id="skill_1">모든 
+			<!-- <input type="radio" name="rank" id="skill_2">하마 소환 -->
 		</div>
 		<div id="area2_enchant" style="display:none">
 			<input type="radio" name="rank" id="enchant_1">3성 정수
@@ -270,11 +270,19 @@ function calc()
 			스킬 총 25가지
 			최신 스킬의 경우 10%, 나머지 스킬이 1/n
 			스킬 조각의 가격은 40, 분해시 15가루와 -150루찌
+			
+			var skillcount = 25;
+			var skillchance = 0.9/(skillcount-1);
+			table2[1] = skillchance * 40 + (1-skillchance) * 15;
+			table2[2] = (1-skillchance) * 150;
+			
+	
 		*/
+		
 		var skillcount = 25;
-		var skillchance = 0.9/(skillcount-1);
+		var skillchance = 1/skillcount;
 		table2[1] = skillchance * 40 + (1-skillchance) * 15;
-		table2[2] = (1-skillchance) * 150
+		table2[2] = (1-skillchance) * 150;
 	}
 	else if (document.getElementById("skill_2").checked)
 	{
