@@ -173,16 +173,13 @@ function calc()
 		table3 = [2500,5000,7500,10000,12500,17500,22500,27500,35000,45000];
 		/*
 			확률
-			89% 확률로 3등급
-			5% 확률로 2등급
-			6% 확률로 1등급			
-			1등급 삭제로 인하여 1등급 뜰 시 3등급과 2등급에 균등하게 분배
+			89/94 확률로 3등급
+			5/94 확률로 2등급
 		*/
 		var chance1 = 0.89;
 		var chance2 = 0.05;
-		var chance3 = 0.06;
-		chance1 = chance1 + chance3*chance1/(chance1+chance2);
-		chance2 = chance2 + chance3*chance2/(chance1+chance2);		
+		chance1 = chance1/(chance1+chance2);
+		chance2 = chance2/(chance1+chance2);
 		table2[1] = chance1 * 20 + chance2/2*100 + chance2/2*40;
 		table2[2] = chance1 * 200 + chance2/2*400;
 	}
@@ -193,9 +190,8 @@ function calc()
 		table3 = [1500,3000,5000,7500,10000,12500,15000,20000,25000,35000];
 		var chance1 = 0.89;
 		var chance2 = 0.05;
-		var chance3 = 0.06;
-		chance1 = chance1 + chance3*chance1/(chance1+chance2);
-		chance2 = chance2 + chance3*chance2/(chance1+chance2);		
+		chance1 = chance1/(chance1+chance2);
+		chance2 = chance2/(chance1+chance2);
 		table2[1] = chance1/8*50 + chance1*7/8*20 + chance2*40;
 		table2[2] = chance1*7/8*200 + chance2*400;
 	}
