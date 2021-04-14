@@ -23,7 +23,7 @@
 			<input type="radio" name="rank" id="character_2">기본 캐릭터
 		</div>
 		<div id="area2_skill" style="display:none">
-			<input type="radio" name="rank" id="skill_1">모든 
+			<input type="radio" name="rank" id="skill_1">모든 스킬
 			<!-- <input type="radio" name="rank" id="skill_2">하마 소환 -->
 		</div>
 		<div id="area2_enchant" style="display:none">
@@ -68,7 +68,7 @@ function pet_on()
 	document.getElementById("area2_character").style.display = "none";
 	document.getElementById("area2_skill").style.display = "none";
 	document.getElementById("area2_enchant").style.display = "none";
-	document.getElementById("pet_1").checked = true;
+	document.getElementById("pet_2").checked = true;
 	
 }
 function character_on()
@@ -104,60 +104,9 @@ function enchant_on()
 
 function calc()
 {
-	var text = "";
+	var text = "";	
 	/*
-	
-		1등급 펫 업글비 필요조각개수 * 1000
-		2~3등급 펫 업글비 필요조각개수 * 500
 		
-		1~2등급 펫 조각개수
-		5, 10, 15, 20, 25, 35, 45, 55, 70, 90
-		3등급 펫 조각 개수
-		3, 6, 10, 15, 20, 25, 30, 40, 50, 70
-		
-		1등급 펫의 경우
-		1% 확률로 200가루와 0루찌
-		10% 확률로 40가루와 -400루찌
-		89% 확률로 20가루와 -200루찌		
-		1뽑기 기대 = 23.8가루와 -218루찌
-		
-		2등급 펫의 경우
-		1% 확률로 70가루와 -700루찌
-		2.5% 확률로 100가루와 0루찌
-		7.5% 확률로 40가루와 -400루찌
-		89% 확률로 20가루와 -200루찌		
-		1뽑기 기대 = 24가루와 -215루찌
-		
-		3등급 펫의 경우
-		1% 확률로 70가루와 -700루찌
-		10% 확률로 40가루와 -400루찌
-		11.125% 확률로 50가루와 0루찌
-		77.875% 확률로 20가루와 -200루찌
-		1뽑기 기대 = 25.8375가루와 -202.75루찌
-	*/
-	
-	/*
-		캐릭터 업글 조각개수
-		[3,5,10,15,25]
-		업글비용
-		[1500,2500,5000,10000,20000]
-		
-		1등급 캐릭터
-		2.5% 확률로 200가루
-		97.5% 확률로 30가루 - 300루찌
-		1뽑기 기대 34.25가루 - 292.5루찌
-		
-		2등급 캐릭터
-		10% 확률로 80가루
-		90% 확률로 30가루 -300루찌
-		1뽑기 기대 = 35가루 -270루찌
-	*/
-	
-	/*
-		스킬 업글 조각 개수
-		[1,2,4,8,10,12,16,20,25,30]
-		업글비용
-		[1500,500,1000,2000,2500,3000,4000,5000,7500,10000]
 		
 		스킬별 뽑기확률의 경우 하단에 후술
 		
@@ -209,94 +158,113 @@ function calc()
 	var petticket = parseIntS(document.getElementById("petticket").value);
 	var petticket6 = parseIntS(document.getElementById("petticket6").value);
 	var dia = parseIntS(document.getElementById("dia").value);
-	
+	/*
 	if(document.getElementById("pet_1").checked)
 	{
 		table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
 		table2 = [200, 23.8, 218,1500];
 		table3 = [5000,10000,15000,20000,25000,35000,45000,55000,70000,90000];
+		
 	}
-	else if(document.getElementById("pet_2").checked)
+	else*/ if(document.getElementById("pet_2").checked)
 	{
 		table1 = [5, 10, 15, 20, 25, 35, 45, 55, 70, 90];
-		table2 = [100, 24, 215,1500];
+		table2 = [100, 22.66, 200,1500];
 		table3 = [2500,5000,7500,10000,12500,17500,22500,27500,35000,45000];
+		/*
+			확률
+			89% 확률로 3등급
+			5% 확률로 2등급
+			6% 확률로 1등급			
+			1등급 삭제로 인하여 1등급 뜰 시 3등급과 2등급에 균등하게 분배
+		*/
+		var chance1 = 0.89;
+		var chance2 = 0.05;
+		var chance3 = 0.06;
+		chance1 = chance1 + chance3*chance1/(chance1+chance2);
+		chance2 = chance2 + chance3*chance2/(chance1+chance2);		
+		table2[1] = chance1 * 20 + chance2/2*100 + chance2/2*40;
+		table2[2] = chance1 * 200 + chance2/2*400;
 	}
 	else if (document.getElementById("pet_3").checked)
 	{
 		table1 = [3, 6, 10, 15, 20, 25, 30, 40, 50, 70];
-		table2 = [50, 25.8375, 202.75,1500];
+		table2 = [50, 24.6145, 186.97,1500];
 		table3 = [1500,3000,5000,7500,10000,12500,15000,20000,25000,35000];
+		var chance1 = 0.89;
+		var chance2 = 0.05;
+		var chance3 = 0.06;
+		chance1 = chance1 + chance3*chance1/(chance1+chance2);
+		chance2 = chance2 + chance3*chance2/(chance1+chance2);		
+		table2[1] = chance1/8*50 + chance1*7/8*20 + chance2*40;
+		table2[2] = chance1*7/8*200 + chance2*400;
 	}
+	/*
 	else if (document.getElementById("character_1").checked)
 	{
 		table1 = [3,5,10,15,25];
 		table2 = [200, 36.25, 262.5,1500];
 		table3 = [1500,2500,5000,10000,20000];
-		/*
-			라인프렌즈 캐릭터 4종
-			4종 합계 10%
-		*/
 		var charcount = 4;		
 		var charchance = 0.1/charcount;
 		table2[1] = charchance * 200 + (1-charchance) * 30;
-		table2[2] = (1-charchance) * 300
-		
-		
+		table2[2] = (1-charchance) * 300		
 	}
+	*/
 	else if (document.getElementById("character_2").checked)
 	{
-		table1 = [3,5,10,15,25];
-		table2 = [80, 36.25, 262.5,1500];
-		table3 = [1500,2500,5000,10000,20000];
 		/*
-			일반 캐릭터 9종
-			9종 합계 90%
+			캐릭터 업글 조각개수
+			[3,5,10,15,25]
+			업글비용
+			[1500,2500,5000,10000,20000]
+		*/
+		table1 = [3,5,10,15,25];
+		table3 = [1500,2500,5000,10000,20000];		
+		table2 = [80, 0, 0,1500];
+		/*
+			1/9 확률로 80가루
+			8/9 확률로 30가루 -300루찌
+			기대값 하단에서 계산
 		*/
 		var charcount = 9;		
-		var charchance = 0.9/charcount;
+		var charchance = 1/charcount;
 		table2[1] = charchance * 80 + (1-charchance) * 30;
 		table2[2] = (1-charchance) * 300
 	}
 	else if (document.getElementById("skill_1").checked)
 	{
-		table1 = [1,2,4,8,10,12,16,20,25,30];
-		table2 = [40, 0,0,1000];
-		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
-		
 		/*
-			스킬별 뽑기 확률에 관한 내용
-			
-			스킬 총 25가지
-			최신 스킬의 경우 10%, 나머지 스킬이 1/n
-			스킬 조각의 가격은 40, 분해시 15가루와 -150루찌
-			
-			var skillcount = 25;
-			var skillchance = 0.9/(skillcount-1);
-			table2[1] = skillchance * 40 + (1-skillchance) * 15;
-			table2[2] = (1-skillchance) * 150;
-			
-	
+			스킬 업글 조각 개수
+			[1,2,4,8,10,12,16,20,25,30]
+			업글비용
+			[1500,500,1000,2000,2500,3000,4000,5000,7500,10000]
 		*/
-		
+		table1 = [1,2,4,8,10,12,16,20,25,30];
+		table2 = [40,0,0,1000];
+		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
+		/*
+			1/25 확률로 40가루
+			24/25 확률로 15가루 -150루찌
+			기대값 하단에서 계산
+		*/
 		var skillcount = 25;
 		var skillchance = 1/skillcount;
 		table2[1] = skillchance * 40 + (1-skillchance) * 15;
 		table2[2] = (1-skillchance) * 150;
 	}
+	/*
 	else if (document.getElementById("skill_2").checked)
 	{
+		3.30 패치로 미사용
 		table1 = [1,2,4,8,10,12,16,20,25,30];
 		table2 = [40, 0,0,1000];
-		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];
-		
-	/*
-		최신 스킬의 경우 뽑기 확률은 10%가 된다
-	*/
-	var skillchance = 0.1;
-	table2[1] = skillchance * 40 + (1-skillchance) * 15;
-	table2[2] = (1-skillchance) * 150		
+		table3 = [1500,500,1000,2000,2500,3000,4000,5000,7500,10000];	
+		var skillchance = 0.1;
+		table2[1] = skillchance * 40 + (1-skillchance) * 15;
+		table2[2] = (1-skillchance) * 150	
 	}
+	*/
 	else if (document.getElementById("enchant_1").checked)
 	{
 		table1 = [1,2,4,8,10,12,16,20,25,30];
@@ -376,7 +344,7 @@ function calc()
 		text += "원,<br>시즌별 다이아 할인팩으로만 구입할 경우 ";
 		var cash = Math.ceil(dia2 * 14.5);
 		text += nwc(cash);
-		text += "원 입니다.<br><br>펫은 샐리, 캐릭터는 수, 스킬은 하마 소환 까지 패치된 기준으로 확률이 적용되었음.";
+		text += "원 입니다.<br><br>2021.3.30 라인프렌즈 삭제가 확률에 미치는 영향까지 반영되었음.";
 	}
 	document.getElementById("result").innerHTML = text;
 }
